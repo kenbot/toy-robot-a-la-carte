@@ -1,0 +1,21 @@
+name: ToyRobot
+version: 1.0
+cabal-version: 1.6
+build-type: Simple
+license: AllRightsReserved
+stability: experimental
+Executable ToyRobot
+  main-is: Main.hs
+  buildable: True
+  build-depends:
+      base -any,
+      free -any,
+      mtl -any,
+      kan-extensions -any
+  other-modules:
+      ToyRobot.GameScript
+      ToyRobot.FreeC
+      ToyRobot.Model
+      ToyRobot.FileOp
+      ToyRobot.GameOp
+      ToyRobot.DataTypesALaCarte
