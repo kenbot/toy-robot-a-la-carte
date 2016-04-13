@@ -11,7 +11,7 @@ import ToyRobot.DataTypesALaCarte
 
 
 main :: IO ()
-main = runGame (Robot (1,1) U) program
+main = runGame (World (Robot (1,1) U)) program
 
 program :: GameScript (GameOp :+: FileOp) () 
 program = 
@@ -19,8 +19,8 @@ program =
     report
     move 
     turnLeft
-    r <- currentRobot
-    save r
+    getWorld >>= save
+    
 
 
 

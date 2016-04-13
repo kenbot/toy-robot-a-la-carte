@@ -10,6 +10,7 @@ Executable ToyRobot
   build-depends:
       base -any,
       free -any,
+      lens -any,
       mtl -any,
       kan-extensions -any
   other-modules:

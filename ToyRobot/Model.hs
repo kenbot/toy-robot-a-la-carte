@@ -1,6 +1,10 @@
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module ToyRobot.Model where
+  
+import Control.Lens
+
 
 type Filename = String
 
@@ -10,10 +14,10 @@ data Facing = U | D | L | R
 type Pos = (Int,Int)
 
 leftwards :: Facing -> Facing
-leftwards = intToFacing . (\n -> n - 1) . facingToInt
+leftwards = intToFacing . pred . facingToInt
 
 rightwards :: Facing -> Facing
-rightwards = intToFacing . (+1) . facingToInt
+rightwards = intToFacing . succ . facingToInt
 
 intToFacing :: Int -> Facing
 intToFacing i = case (mod i 4) of 
@@ -30,14 +34,28 @@ facingToInt = \case
   L -> 3
 
 
-data Robot = Robot Pos Facing
+
+data Robot = Robot 
+  { _pos :: Pos
+  , _facing :: Facing
+  } 
   deriving (Show, Eq)
+  
+makeLenses ''Robot
+
 
 movePos :: Facing -> Pos -> Pos
 movePos U (x, y) = (x, y-1)
 movePos D (x, y) = (x, y+1)
 movePos L (x, y) = (x-1, y)
 movePos R (x, y) = (x+1, y)
+
+
+data World = World { _robot :: Robot }
+  deriving Show
+  
+makeLenses ''World
+
 
 moveRobot :: Robot -> Robot
 moveRobot (Robot pos facing) = Robot (movePos facing pos) facing
